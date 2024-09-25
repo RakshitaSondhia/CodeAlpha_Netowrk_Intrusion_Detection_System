@@ -1,0 +1,17 @@
+# Detect SSH Brute Force Attempt
+alert tcp any any -> any 22 (msg:"SSH Brute Force Attempt"; flags:S; detection_filter:track by_src, count 5, seconds 60; sid:1000001; rev:1;)
+
+# Detect Suspicious HTTP GET Request
+alert tcp any any -> any 80 (msg:"Suspicious HTTP GET Request"; content:"GET"; http_method; content:"/etc/passwd"; http_uri; sid:1000002; rev:1;)
+
+# Detect ICMP Ping Flood
+alert icmp any any -> any any (msg:"ICMP Ping Flood"; detection_filter:track by_src, count 20, seconds 1; sid:1000003; rev:1;)
+
+# Detect Possible Port Scan
+alert tcp any any -> any any (msg:"Possible Port Scan"; flags:S; detection_filter:track by_src, count 10, seconds 1; sid:1000004; rev:1;)
+
+# Detect SQL Injection Attempt
+alert tcp any any -> any 80 (msg:"SQL Injection Attempt"; content:"select"; http_uri; sid:1000005; rev:1;)
+
+# Detect Suspicious SSL Traffic
+alert tcp any any -> any 443 (msg:"Suspicious SSL Traffic"; content:"GET"; http_method; sid:1000006; rev:1;)
